@@ -1,0 +1,72 @@
+.div-viewer {
+    display: flex;
+    width: 0px;
+    height: 100%;
+    min-width: 550px;
+    margin-right: auto;
+    margin-left: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    font-family: monospace;
+    line-height: 15px;
+}
+.div-level-collapsed {
+    display: flex;
+    cursor: pointer;
+}
+.paragraph {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+.paragraph-2 {
+    margin-right: 1px;
+}
+.paragraph-3 {
+    margin-right: 5px;
+}
+.paragraph-4 {
+    margin-left: 15px;
+}
+.paragraph-sign {
+    width: 8px;
+    margin-right: 5px;
+}
+.div-level-extended {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+.div-ext-prefix {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.div-level-single {
+    display: flex;
+}
+.string {
+    color: #a31e20;
+}
+.number {
+    color: #000795;
+}
+.bigint {
+    color: #000795;
+}
+.boolean {
+    color: #000795;
+}
+.symbol {
+    color: orange;
+}
+.undefined {
+    color: gray;
+}
+.object {
+    color: black;
+}
+.function {
+    color: black;
+}

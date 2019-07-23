@@ -1,0 +1,8 @@
+<div class="form-block w-form">
+  <form class="form" #f="ngForm" (ngSubmit)="onSubmit(f)" nonvalidate>
+    <label class="field-label">JSON URL</label>
+    <input class="text-field w-input" maxlength="256" name="url" placeholder="Place your JSON url" type="text" id="url" required="" autofocus="true" ngModel>
+    <input type="submit" class="submit-button w-button" value="Show JSON">
+  </form>
+</div>
+<div id="jsonViewerContainer"></div>
