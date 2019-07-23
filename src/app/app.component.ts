@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
   displayJSON(data: JSON) {
     // Destroy previous active component
     if (this.jsonViewerCompRef) {
-      this.jsonViewerCompRef.Destroy();
+      this.jsonViewerCompRef.destroy();
     }
 
     // Create a component reference from the component
