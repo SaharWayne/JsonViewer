@@ -5,8 +5,6 @@ import { NgForm } from '@angular/forms';
 
 import { ApplicationRef, ComponentFactoryResolver, EmbeddedViewRef, Injector } from '@angular/core';
 
-import * as $ from 'jquery';
-
 
 @Component({
   selector: 'app-root',
@@ -15,38 +13,15 @@ import * as $ from 'jquery';
 })
 export class AppComponent implements OnInit {
   title = 'JsonViewer';
-  // data = JSON.parse(JSON.stringify({
-  //   str: 'Hello',
-  //   obj: [
-  //     'hello'
-  //   ],
-  //   boolean: true,
-  //   number: 124
-  // }))
-
-  data = JSON.parse(JSON.stringify(
-    {
-      count: 87,
-      next: "https://swapi.co/api/people?page=2",
-      previous: null,
-      results: [
-        {
-          birth_year: "112BBY",
-          vehicles: []
-        }
-      ]
-    }));
+  jsonViewerCompRef: any;
 
   constructor(private fetcherService: FetcherService, private componentFactoryResolver: ComponentFactoryResolver,
     private appRef: ApplicationRef, private injector: Injector) { }
 
   ngOnInit() {
-    // console.log(this.data);
-    // this.displayJSON(this.data);
   }
 
   onSubmit(f: NgForm) {
-    console.log('hello')
     if (f.disabled) { // previous submit in progress
       return;
     }
@@ -58,7 +33,6 @@ export class AppComponent implements OnInit {
         f.control["disable"]();
 
         this.fetcherService.fetchJSON(url).subscribe(data => {
-          // console.log('done')
           this.displayJSON(data);
           f.control["enable"]();
         }, error => {
@@ -72,18 +46,23 @@ export class AppComponent implements OnInit {
   }
 
   displayJSON(data: JSON) {
+    // Destroy previous active component
+    if (this.jsonViewerCompRef) {
+      this.jsonViewerCompRef.Destroy();
+    }
+
     // Create a component reference from the component
-    const jsonViewerCompRef = this.componentFactoryResolver
+    this.jsonViewerCompRef = this.componentFactoryResolver
       .resolveComponentFactory(JsonViewerComponent).create(this.injector);
 
     // Bind data to component’s inputs
-    jsonViewerCompRef.instance.data = data;
+    this.jsonViewerCompRef.instance.data = data;
 
     // Attach component to the appRef so that it's inside the ng component tree
-    this.appRef.attachView(jsonViewerCompRef.hostView);
+    this.appRef.attachView(this.jsonViewerCompRef.hostView);
 
     // Get DOM element from component
-    const domElem = (jsonViewerCompRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+    const domElem = (this.jsonViewerCompRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
 
     // Append Loding DOM element to the body
     document.getElementById('jsonViewerContainer').appendChild(domElem);
