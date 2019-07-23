@@ -21,17 +21,21 @@ export class AppComponent implements OnInit {
   ngOnInit() {
   }
 
+  // On url submit, fetch the JSON using the fetcher service (implements an http get request)
   onSubmit(f: NgForm) {
-    if (f.disabled) { // previous submit in progress
+    if (f.disabled) { // if previous submit is in progress, do nothing
       return;
     }
 
+    // Check input validity
     if ("url" in f.value) {
       let url = f.value["url"];
 
+      // Check input validity
       if (url.length > 0) {
         f.control["disable"]();
 
+        // Fetch JSON
         this.fetcherService.fetchJSON(url).subscribe(data => {
           this.displayJSON(data);
           f.control["enable"]();
@@ -45,6 +49,7 @@ export class AppComponent implements OnInit {
     }
   }
 
+  // Once JSON is fetched, this function dynamically creates JsonViewer Component and displays it
   displayJSON(data: JSON) {
     // Destroy previous active component
     if (this.jsonViewerCompRef) {
